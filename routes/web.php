@@ -5,7 +5,7 @@
 $router->add('admin/posts/{id:\d+}/edit',
     [
         'controller' => \App\Controllers\HomeController::class,
-        'action' => 'index',
+        'action' => 'index', // name of function in controller above
         'method' => 'GET'
     ]
 );

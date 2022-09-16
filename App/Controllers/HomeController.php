@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use Core\Router;
 
 class HomeController extends Controller
 {
@@ -10,4 +11,6 @@ class HomeController extends Controller
     {
         d($id);
     }
+
+
 }

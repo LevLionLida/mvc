@@ -4,7 +4,7 @@ namespace Core;
 
 class Router
 {
-    protected array $routes = [], $params = [];
+    public array $routes = [], $params = [];
 
     protected array $convertTypes = [
         'd' => 'int',
@@ -27,13 +27,14 @@ class Router
     public function dispatch(string $url)
     {
         $url = trim($url, '/');
-        $url = $this->removeQuesryStringVariables($url);
-        if ($this->match($url)) {
+        $url = $this->removeQueryStringVariables($url);
+        if ($this->match($url)) { // check if url that in request match to one of the route in "routes" file
             if (array_key_exists('method', $this->params) && ($_SERVER['REQUEST_METHOD'] !== $this->params['method'])) {
                 throw new \Exception("Method " . $_SERVER['REQUEST_METHOD'] . " doesn't supported by this route");
-            }
+            }// checking on method of request
             unset($this->params['method']);
 
+//            dd($this->params);
             if (class_exists($this->params['controller'])) {
                 $controller = $this->retrieveParam('controller');
                 if (method_exists($controller, $this->params['action'])) {
@@ -92,7 +93,7 @@ class Router
         return $params;
     }
 
-    protected function removeQuesryStringVariables(string $url) //trim get parameter url string
+    protected function removeQueryStringVariables(string $url) //trim get parameter url string
     {
         return preg_replace('/([\w\/]+)\?([\w\/=\d]+)/i', '$1', $url);///\?[A-z0-9=]+/m
     }
